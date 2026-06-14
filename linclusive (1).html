@@ -1,0 +1,1669 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Inclusive – La bibliothèque</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GMCF9S5HP6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GMCF9S5HP6');
+</script>
+<style>
+/* ── CHARTE GRAPHIQUE L'INCLUSIVE ────────────────────────────────── */
+:root{
+  --vert:       #37A955;
+  --vert-fonce: #2E7D32;
+  --vert-pale:  #E8F5E9;
+  --cyan:       #00b3c6;
+  --rose:       #ff2478;
+  --or:         #F9A825;
+  --encre:      #1A1A2E;
+  --fond:       #F4F6F4;
+  --blanc:      #fff;
+  --bord:       #E0E0E0;
+  --gris:       #666;
+  --rouge-fav:  #E53935;
+  --ombre:      0 4px 20px rgba(0,0,0,.09);
+  --ombre-h:    0 8px 32px rgba(55,169,85,.2);
+  --r:          14px;
+  --r-s:        8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--fond);color:var(--encre);font-size:15px;line-height:1.5;min-height:100vh}
+button{cursor:pointer;border:none;background:none;font:inherit}
+
+/* ── EN-TÊTE ─────────────────────────────────────────────────────── */
+.site-header{
+  background:var(--vert);color:#fff;
+  padding:0 28px;
+  position:sticky;top:0;z-index:200;
+  box-shadow:0 2px 12px rgba(0,0,0,.18);
+}
+.header-inner{
+  max-width:1280px;margin:0 auto;
+  display:flex;align-items:center;gap:16px;height:70px;
+}
+/* Logo SVG inline dans un cadre blanc */
+.logo-wrap{
+  background:#fff;border-radius:10px;
+  width:120px;height:52px;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;flex-shrink:0;padding:4px 6px;
+}
+.logo-wrap svg{width:100%;height:100%}
+.site-tagline{font-size:12px;opacity:.85;flex:1}
+.btn-favs{
+  background:rgba(255,255,255,.18);color:#fff;
+  border-radius:999px;padding:8px 18px;
+  font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:7px;
+  transition:background .2s;white-space:nowrap;
+  margin-left:auto;
+}
+.btn-favs:hover{background:rgba(255,255,255,.3)}
+
+/* ── SIDEBAR + LAYOUT ────────────────────────────────────────────── */
+.page-layout{
+  max-width:1280px;margin:0 auto;
+  display:grid;grid-template-columns:240px 1fr;
+  gap:0;min-height:calc(100vh - 70px);
+}
+/* Sidebar */
+.sidebar{
+  background:#fff;border-right:1px solid var(--bord);
+  padding:28px 20px;display:flex;flex-direction:column;gap:24px;
+  position:sticky;top:70px;align-self:start;
+  max-height:calc(100vh - 70px);overflow-y:auto;
+}
+/* Mascotte */
+.mascotte-bloc{
+  background:var(--vert-pale);border:1px solid #C8E6C9;
+  border-radius:var(--r);padding:16px;text-align:center;
+}
+.mascotte-svg{margin:0 auto 10px;width:80px}
+.mascotte-texte{font-size:12.5px;color:var(--gris);line-height:1.5}
+.mascotte-texte strong{color:var(--vert);font-weight:700}
+
+/* Nav catégories */
+.nav-title{font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px}
+.nav-pill{
+  display:flex;align-items:center;justify-content:space-between;
+  width:100%;padding:8px 12px;border-radius:var(--r-s);
+  font-size:13px;color:var(--gris);font-weight:500;
+  transition:all .15s;text-align:left;
+}
+.nav-pill:hover{background:var(--vert-pale);color:var(--vert)}
+.nav-pill.active{background:var(--vert-pale);color:var(--vert);font-weight:700}
+.nav-pill .dot{
+  width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-right:8px;
+}
+.nav-count{
+  font-size:11px;background:var(--fond);border-radius:999px;
+  padding:1px 7px;color:var(--gris);
+}
+.nav-pill.active .nav-count{background:rgba(55,169,85,.15);color:var(--vert)}
+
+/* ── CONTENU PRINCIPAL ───────────────────────────────────────────── */
+.main{padding:28px 28px 60px}
+
+/* Barre de recherche */
+.search-bar{
+  background:#fff;border:1.5px solid var(--bord);border-radius:999px;
+  display:flex;align-items:center;gap:10px;
+  padding:10px 20px;margin-bottom:24px;
+  max-width:480px;
+  transition:border-color .2s;
+}
+.search-bar:focus-within{border-color:var(--vert)}
+.search-bar span{font-size:18px;color:var(--gris);flex-shrink:0}
+.search-bar input{border:none;outline:none;font:inherit;font-size:14px;width:100%;background:none}
+
+.section-head{
+  display:flex;align-items:center;gap:10px;
+  font-size:15px;font-weight:700;color:var(--gris);
+  margin-bottom:18px;
+}
+.section-head::after{content:'';flex:1;height:1px;background:var(--bord)}
+
+/* ── GRILLE CARTES ───────────────────────────────────────────────── */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+  gap:18px;
+}
+.empty{grid-column:1/-1;text-align:center;padding:60px;color:var(--gris)}
+.empty .ico{font-size:48px;margin-bottom:12px}
+
+/* Carte */
+.card{
+  background:#fff;border:1.5px solid var(--bord);border-radius:var(--r);
+  overflow:hidden;cursor:pointer;position:relative;
+  display:flex;flex-direction:column;
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+}
+.card:hover{transform:translateY(-4px);box-shadow:var(--ombre-h);border-color:#A5D6A7}
+
+/* Vignette */
+.card-thumb{
+  height:140px;position:relative;overflow:hidden;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+/* Image de couverture quand disponible */
+.card-thumb img{
+  width:100%;height:100%;object-fit:cover;object-position:top center;
+  display:block;
+}
+/* Fallback couleur + numéro */
+.card-thumb-fallback{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:42px;font-weight:900;color:rgba(255,255,255,.9);
+  letter-spacing:-2px;
+}
+/* Badge bonus */
+.badge-bonus{
+  position:absolute;top:8px;left:8px;z-index:2;
+  background:var(--or);color:#fff;
+  border-radius:999px;padding:2px 10px;
+  font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+}
+/* Bouton favori */
+.fav-btn{
+  position:absolute;top:8px;right:8px;z-index:2;
+  width:30px;height:30px;border-radius:50%;
+  background:rgba(255,255,255,.88);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;transition:transform .15s;
+}
+.fav-btn:hover{transform:scale(1.2)}
+.fav-btn.on{color:var(--rouge-fav)}
+
+.card-body{padding:12px 13px 14px;flex:1;display:flex;flex-direction:column}
+.card-cat{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--vert-pale);color:var(--vert);
+  border-radius:999px;padding:2px 9px;
+  font-size:10px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;
+  margin-bottom:7px;align-self:flex-start;
+}
+.card-title{font-size:13px;font-weight:700;line-height:1.35;color:var(--encre);flex:1;margin-bottom:8px}
+.card-meta{font-size:11px;color:var(--gris)}
+
+/* ── MODALE ──────────────────────────────────────────────────────── */
+.overlay{
+  display:none;position:fixed;inset:0;z-index:500;
+  background:rgba(10,20,10,.75);backdrop-filter:blur(5px);
+  align-items:center;justify-content:center;padding:16px;
+}
+.overlay.open{display:flex}
+.modal{
+  background:#fff;border-radius:var(--r);
+  width:100%;max-width:940px;max-height:93vh;
+  display:flex;flex-direction:column;overflow:hidden;
+  box-shadow:0 24px 64px rgba(0,0,0,.32);
+}
+.modal-head{
+  padding:16px 20px;border-bottom:1px solid var(--bord);
+  display:flex;align-items:flex-start;gap:12px;flex-shrink:0;
+}
+.modal-cat-badge{
+  background:var(--vert-pale);color:var(--vert);
+  border-radius:999px;padding:3px 12px;
+  font-size:11px;font-weight:700;text-transform:uppercase;white-space:nowrap;
+}
+.modal-info{flex:1;min-width:0}
+.modal-num{font-size:11px;color:var(--gris);margin-bottom:3px}
+.modal-title{font-size:16px;font-weight:800;color:var(--encre)}
+.modal-btns{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.btn-dl{
+  background:var(--vert);color:#fff;border-radius:var(--r-s);
+  padding:8px 16px;font-size:13px;font-weight:600;
+  display:flex;align-items:center;gap:6px;
+  transition:filter .18s;
+}
+.btn-dl:hover{filter:brightness(.9)}
+.btn-close{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--fond);color:var(--gris);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;line-height:1;transition:background .15s;
+}
+.btn-close:hover{background:var(--bord)}
+.modal-pdf{
+  flex:1;background:#525659;overflow:hidden;min-height:300px;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-pdf iframe{width:100%;height:100%;border:none}
+.pdf-ph{color:#bbb;text-align:center;padding:48px 20px}
+.pdf-ph .ico{font-size:48px;margin-bottom:10px}
+.modal-foot{
+  padding:12px 20px;border-top:1px solid var(--bord);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;flex-wrap:wrap;gap:10px;
+}
+.btn-fav-modal{
+  display:flex;align-items:center;gap:8px;
+  border:1.5px solid var(--bord);border-radius:999px;
+  padding:7px 16px;font-size:13px;font-weight:600;color:var(--gris);
+  transition:all .18s;
+}
+.btn-fav-modal:hover{border-color:var(--rouge-fav);color:var(--rouge-fav)}
+.btn-fav-modal.on{background:#FFF3F3;border-color:var(--rouge-fav);color:var(--rouge-fav)}
+.modal-nav{display:flex;gap:8px}
+.btn-nav{
+  background:var(--fond);border:1.5px solid var(--bord);
+  border-radius:var(--r-s);padding:7px 14px;
+  font-size:13px;font-weight:600;color:var(--encre);
+  transition:all .18s;
+}
+.btn-nav:hover{background:var(--vert-pale);border-color:var(--vert);color:var(--vert)}
+.btn-nav:disabled{opacity:.3;pointer-events:none}
+
+/* ── TOAST ───────────────────────────────────────────────────────── */
+.toast{
+  position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(60px);
+  background:var(--encre);color:#fff;
+  border-radius:999px;padding:10px 22px;
+  font-size:13px;font-weight:600;
+  box-shadow:0 4px 20px rgba(0,0,0,.25);
+  z-index:9999;opacity:0;white-space:nowrap;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s;
+}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* ── BANDEAUX STATS ──────────────────────────────────────────────── */
+.bandeaux-zone{
+  display:grid;
+  grid-template-columns:1fr 1fr 260px;
+  gap:16px;
+  margin-bottom:28px;
+}
+
+/* Bandeau horizontal commun */
+.bandeau{
+  background:#fff;border:1.5px solid var(--bord);
+  border-radius:var(--r);overflow:hidden;
+}
+.bandeau-header{
+  display:flex;align-items:center;gap:8px;
+  padding:11px 16px;
+  font-size:12px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;
+  border-bottom:1px solid var(--bord);
+}
+.bandeau-header .ico-bnd{font-size:16px}
+
+/* Vues — accent cyan */
+.bandeau-vues .bandeau-header{
+  background:linear-gradient(90deg,#E0F7FA,#fff);
+  color:#00838F;border-bottom-color:#B2EBF2;
+}
+/* Téléchargements — accent vert */
+.bandeau-dl .bandeau-header{
+  background:linear-gradient(90deg,var(--vert-pale),#fff);
+  color:var(--vert-fonce);border-bottom-color:#C8E6C9;
+}
+
+.bandeau-row{
+  display:flex;align-items:center;gap:12px;
+  padding:10px 16px;cursor:pointer;
+  transition:background .15s;border-bottom:1px solid #f5f5f5;
+}
+.bandeau-row:last-child{border-bottom:none}
+.bandeau-row:hover{background:#FAFAFA}
+
+.bnd-rank{
+  font-size:18px;font-weight:900;width:24px;text-align:center;
+  flex-shrink:0;opacity:.25;
+}
+.bnd-thumb{
+  width:36px;height:46px;border-radius:5px;overflow:hidden;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:#fff;
+}
+.bnd-thumb img{width:100%;height:100%;object-fit:cover;object-position:top}
+.bnd-info{flex:1;min-width:0}
+.bnd-num{font-size:10px;font-weight:700;color:var(--gris);margin-bottom:2px}
+.bnd-title{
+  font-size:12px;font-weight:600;color:var(--encre);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.bnd-stat{
+  font-size:11px;font-weight:700;white-space:nowrap;flex-shrink:0;
+}
+.bandeau-vues .bnd-stat{color:#00838F}
+.bandeau-dl   .bnd-stat{color:var(--vert)}
+
+/* ── BANDEAU VERTICAL — Dernières parutions ───────────────────────── */
+.bandeau-recents{
+  background:#fff;border:1.5px solid var(--bord);
+  border-radius:var(--r);overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.bandeau-recents .bandeau-header{
+  background:linear-gradient(90deg,#FFF8E1,#fff);
+  color:#E65100;border-bottom-color:#FFE0B2;
+}
+.recent-item{
+  display:flex;gap:12px;padding:12px 14px;
+  cursor:pointer;transition:background .15s;
+  border-bottom:1px solid #f5f5f5;flex:1;align-items:flex-start;
+}
+.recent-item:last-child{border-bottom:none}
+.recent-item:hover{background:#FAFAFA}
+.recent-thumb{
+  width:52px;height:66px;border-radius:6px;overflow:hidden;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:13px;font-weight:800;color:#fff;
+}
+.recent-thumb img{width:100%;height:100%;object-fit:cover;object-position:top}
+.recent-info{flex:1;min-width:0}
+.recent-num{font-size:10px;font-weight:700;color:var(--gris);margin-bottom:3px}
+.recent-title{font-size:12.5px;font-weight:700;color:var(--encre);line-height:1.3;margin-bottom:4px}
+.recent-cat{
+  display:inline-block;background:var(--vert-pale);color:var(--vert);
+  border-radius:999px;padding:1px 8px;
+  font-size:10px;font-weight:700;text-transform:uppercase;
+}
+.recent-date{font-size:10px;color:var(--gris);margin-top:3px}
+
+/* masquer les bandeaux si filtre/recherche actif */
+.bandeaux-zone.hidden{display:none}
+
+/* ── BACK-OFFICE ADMIN ───────────────────────────────────────────── */
+
+/* Overlay login */
+.admin-login-overlay{
+  display:none;position:fixed;inset:0;z-index:800;
+  background:rgba(10,20,10,.82);backdrop-filter:blur(6px);
+  align-items:center;justify-content:center;
+}
+.admin-login-overlay.open{display:flex}
+.login-box{
+  background:#fff;border-radius:var(--r);
+  width:100%;max-width:380px;
+  padding:36px 32px;
+  box-shadow:0 24px 64px rgba(0,0,0,.3);
+  text-align:center;
+}
+.login-box .logo-mini{
+  width:100px;height:44px;margin:0 auto 20px;
+  background:var(--vert-pale);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;padding:4px;
+}
+.login-box h2{font-size:18px;font-weight:800;color:var(--encre);margin-bottom:6px}
+.login-box p{font-size:13px;color:var(--gris);margin-bottom:24px}
+.login-field{
+  width:100%;border:1.5px solid var(--bord);border-radius:var(--r-s);
+  padding:11px 16px;font:inherit;font-size:14px;
+  outline:none;margin-bottom:14px;transition:border-color .2s;text-align:center;
+  letter-spacing:3px;
+}
+.login-field:focus{border-color:var(--vert)}
+.login-err{color:#E53935;font-size:12px;margin-bottom:10px;min-height:16px}
+.btn-login{
+  width:100%;background:var(--vert);color:#fff;
+  border-radius:var(--r-s);padding:12px;
+  font-size:14px;font-weight:700;
+  transition:filter .18s;
+}
+.btn-login:hover{filter:brightness(.9)}
+
+/* Interface admin */
+.admin-ui{
+  display:none;position:fixed;inset:0;z-index:700;
+  background:var(--fond);flex-direction:column;
+}
+.admin-ui.open{display:flex}
+
+/* Barre admin */
+.admin-bar{
+  background:var(--encre);color:#fff;
+  padding:0 24px;height:60px;
+  display:flex;align-items:center;gap:16px;flex-shrink:0;
+  box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.admin-bar .a-title{font-size:15px;font-weight:800;letter-spacing:.3px;flex:1}
+.admin-bar .a-site-name{font-size:12px;color:#00b3c6;font-weight:600}
+.btn-admin-nav{
+  background:rgba(255,255,255,.1);color:#fff;
+  border-radius:var(--r-s);padding:7px 14px;
+  font-size:12px;font-weight:600;
+  transition:background .18s;
+}
+.btn-admin-nav:hover,.btn-admin-nav.active{background:rgba(255,255,255,.22)}
+.btn-public{
+  background:var(--vert);color:#fff;
+  border-radius:var(--r-s);padding:7px 14px;
+  font-size:12px;font-weight:600;margin-left:8px;
+  display:flex;align-items:center;gap:6px;
+}
+.btn-logout{
+  background:rgba(229,57,53,.25);color:#FF8A80;
+  border-radius:var(--r-s);padding:7px 12px;
+  font-size:12px;font-weight:600;
+}
+
+/* Contenu admin */
+.admin-content{flex:1;overflow-y:auto;padding:28px}
+.admin-screen{display:none}
+.admin-screen.active{display:block}
+
+/* Titres sections */
+.admin-h{
+  font-size:20px;font-weight:800;color:var(--encre);
+  margin-bottom:6px;
+}
+.admin-sub{font-size:13px;color:var(--gris);margin-bottom:24px}
+
+/* ── Tableau de bord ── */
+.dash-stats{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:16px;margin-bottom:28px;
+}
+.dash-stat{
+  background:#fff;border:1.5px solid var(--bord);border-radius:var(--r);
+  padding:20px 16px;text-align:center;
+}
+.dash-stat .ds-num{font-size:32px;font-weight:900;color:var(--vert);display:block}
+.dash-stat .ds-label{font-size:12px;color:var(--gris);margin-top:4px}
+
+.dash-recent-title{
+  font-size:13px;font-weight:700;color:var(--gris);
+  text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;
+}
+.dash-list{
+  background:#fff;border:1.5px solid var(--bord);border-radius:var(--r);overflow:hidden;
+}
+.dash-row{
+  display:grid;grid-template-columns:40px 1fr auto auto;
+  gap:12px;align-items:center;
+  padding:11px 16px;border-bottom:1px solid #f0f0f0;font-size:13px;
+}
+.dash-row:last-child{border-bottom:none}
+.dash-row:hover{background:#fafafa}
+.dash-num-badge{
+  background:var(--vert-pale);color:var(--vert);
+  border-radius:6px;padding:3px 0;
+  font-size:11px;font-weight:800;text-align:center;
+}
+.dash-cat-dot{
+  width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;
+}
+.status-pub{
+  background:#E8F5E9;color:#2E7D32;
+  border-radius:999px;padding:2px 10px;font-size:11px;font-weight:700;
+}
+.status-draft{
+  background:#FFF8E1;color:#E65100;
+  border-radius:999px;padding:2px 10px;font-size:11px;font-weight:700;
+}
+
+/* ── Formulaire ajout/édition ── */
+.form-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:20px;
+  background:#fff;border:1.5px solid var(--bord);border-radius:var(--r);
+  padding:28px;margin-bottom:20px;
+}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-group.full{grid-column:1/-1}
+.form-label{font-size:12px;font-weight:700;color:var(--encre);text-transform:uppercase;letter-spacing:.4px}
+.form-hint{font-size:11px;color:var(--gris);margin-top:2px}
+.form-input{
+  border:1.5px solid var(--bord);border-radius:var(--r-s);
+  padding:10px 14px;font:inherit;font-size:14px;
+  outline:none;transition:border-color .2s;background:#fff;
+}
+.form-input:focus{border-color:var(--vert)}
+.form-select{
+  border:1.5px solid var(--bord);border-radius:var(--r-s);
+  padding:10px 14px;font:inherit;font-size:14px;
+  outline:none;background:#fff;cursor:pointer;
+}
+.form-select:focus{border-color:var(--vert)}
+.form-actions{
+  display:flex;gap:10px;flex-wrap:wrap;
+}
+.btn-save{
+  background:var(--vert);color:#fff;border-radius:var(--r-s);
+  padding:11px 24px;font-size:14px;font-weight:700;
+  transition:filter .18s;
+}
+.btn-save:hover{filter:brightness(.9)}
+.btn-draft{
+  background:var(--fond);border:1.5px solid var(--bord);color:var(--encre);
+  border-radius:var(--r-s);padding:11px 20px;font-size:14px;font-weight:600;
+}
+.btn-cancel-form{
+  background:none;color:var(--gris);
+  padding:11px 16px;font-size:14px;
+}
+.form-notice{
+  background:#FFF8E1;border:1px solid #FFE0B2;border-radius:var(--r-s);
+  padding:12px 16px;font-size:12px;color:#E65100;line-height:1.6;
+  margin-bottom:20px;
+}
+.form-notice strong{font-weight:700}
+
+/* ── Gérer (table) ── */
+.manage-filters{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.manage-search{
+  border:1.5px solid var(--bord);border-radius:999px;
+  padding:8px 16px;font:inherit;font-size:13px;
+  outline:none;flex:1;max-width:280px;
+}
+.manage-search:focus{border-color:var(--vert)}
+.tbl-wrap{background:#fff;border:1.5px solid var(--bord);border-radius:var(--r);overflow:auto}
+table{width:100%;border-collapse:collapse}
+th{
+  font-size:11px;font-weight:700;color:var(--gris);text-transform:uppercase;letter-spacing:.5px;
+  padding:10px 14px;text-align:left;background:#fafafa;border-bottom:1px solid var(--bord);
+  white-space:nowrap;
+}
+td{padding:10px 14px;border-bottom:1px solid #f5f5f5;font-size:13px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:#fafafa}
+.tbl-num{
+  background:var(--vert-pale);color:var(--vert);
+  border-radius:6px;padding:3px 8px;
+  font-size:11px;font-weight:800;white-space:nowrap;
+}
+.tbl-title{font-weight:600;color:var(--encre)}
+.tbl-actions{display:flex;gap:6px}
+.btn-tbl{
+  border:1.5px solid var(--bord);border-radius:var(--r-s);
+  padding:5px 10px;font-size:12px;font-weight:600;color:var(--encre);
+  transition:all .15s;white-space:nowrap;
+}
+.btn-tbl:hover{background:var(--vert-pale);border-color:var(--vert);color:var(--vert)}
+.btn-tbl.danger:hover{background:#FFF3F3;border-color:#E53935;color:#E53935}
+
+/* ── Données (export) ── */
+.data-card{
+  background:#fff;border:1.5px solid var(--bord);border-radius:var(--r);
+  padding:24px;margin-bottom:16px;
+  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;
+}
+.data-card-info h3{font-size:15px;font-weight:700;margin-bottom:4px}
+.data-card-info p{font-size:13px;color:var(--gris)}
+.btn-export{
+  background:var(--encre);color:#fff;border-radius:var(--r-s);
+  padding:10px 20px;font-size:13px;font-weight:600;white-space:nowrap;
+  transition:filter .18s;flex-shrink:0;
+}
+.btn-export:hover{filter:brightness(1.2)}
+.pwd-change{
+  background:#fff;border:1.5px solid var(--bord);border-radius:var(--r);
+  padding:24px;
+}
+.pwd-change h3{font-size:15px;font-weight:700;margin-bottom:16px}
+.pwd-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pwd-row .form-input{max-width:240px}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────────── */
+@media(max-width:900px){
+  .page-layout{grid-template-columns:1fr}
+  .sidebar{
+    position:static;max-height:none;
+    flex-direction:row;flex-wrap:wrap;
+    padding:16px 20px;gap:12px;
+    border-right:none;border-bottom:1px solid var(--bord);
+  }
+  .mascotte-bloc{display:none}
+  .nav-section{display:flex;gap:6px;flex-wrap:wrap}
+  .nav-title{display:none}
+  .nav-pill{padding:6px 12px;font-size:12px}
+  .main{padding:18px 16px 50px}
+  .grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
+  .bandeaux-zone{grid-template-columns:1fr 1fr;gap:12px}
+  .bandeau-recents{grid-column:1/-1;flex-direction:row}
+  .recent-item{flex:1}
+}
+@media(max-width:640px){
+  .bandeaux-zone{grid-template-columns:1fr}
+  .bandeau-recents{flex-direction:column}
+  .form-grid{grid-template-columns:1fr}
+  .admin-bar{gap:8px;padding:0 12px}
+  .btn-admin-nav{padding:6px 10px;font-size:11px}
+  .admin-content{padding:16px}
+}
+@media(max-width:540px){
+  .header-inner{gap:10px}
+  .logo-wrap{width:90px;height:40px}
+  .site-tagline{display:none}
+  .modal-head{flex-wrap:wrap}
+  .modal-btns{width:100%;justify-content:flex-end}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ EN-TÊTE ══════════════════════════════════════════════════════ -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo-wrap">
+      <!-- Logo SVG L'Inclusive -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 500">
+        <style>
+          .t-i{font-family:'Century Gothic','Segoe UI',Arial,sans-serif;font-weight:bold;font-size:135px;fill:#37A955}
+          .t-h{font-family:Arial,sans-serif;font-weight:bold;font-size:140px;fill:#00b3c6}
+          .sr{stroke:#ff2478;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none}
+          .sv{stroke:#37A955;stroke-width:6;stroke-linecap:round;stroke-linejoin:round;fill:none}
+          .fr{fill:#ff2478}.fv{fill:#37A955}.fb{fill:#00b3c6}
+        </style>
+        <path d="M 410,170 Q 595,110 770,170" class="sr"/>
+        <text x="90" y="310" class="t-h">#</text>
+        <path d="M 285,150 L 285,310 C 285,325 295,335 310,335 L 375,335 C 385,335 390,330 390,323 C 390,315 385,312 375,312 L 312,312 L 312,150 Z" fill="#37A955"/>
+        <path d="M 312,323 L 380,323" stroke="#fafafa" stroke-width="3" stroke-linecap="round"/>
+        <path d="M 398,150 C 403,150 408,155 408,162 C 408,175 395,195 385,202 C 382,204 379,201 381,197 C 388,185 395,165 395,162 C 395,155 396,150 398,150 Z" class="fb"/>
+        <text x="415" y="312" class="t-i">inclusive</text>
+        <circle cx="434" cy="190" r="11" class="fb"/>
+        <g transform="translate(285,115) rotate(-35)">
+          <rect x="-12" y="-25" width="24" height="42" rx="12" class="sr"/>
+          <rect x="-12" y="-12" width="24" height="42" rx="12" class="sr"/>
+        </g>
+        <g transform="translate(490,80)">
+          <path d="M 0,-30 C 20,-30 35,-15 35,5 C 35,15 25,28 15,32 L 2,42 L 2,34 C -15,32 -30,20 -30,5 C -30,-15 -15,-30 0,-30 Z" class="sv"/>
+          <circle cx="2" cy="2" r="14" class="sv" stroke-width="4"/>
+        </g>
+        <g transform="translate(595,55)">
+          <path d="M 0,-32 C 22,-32 35,-18 35,2 C 35,12 25,25 12,30 L 0,42 L -2,31 C -18,29 -32,17 -32,2 C -32,-18 -18,-32 0,-32 Z" class="sv"/>
+          <rect x="-15" y="-15" width="13" height="26" class="sr" stroke-width="3"/>
+          <rect x="2" y="-15" width="13" height="26" class="sr" stroke-width="3"/>
+          <circle cx="-4" cy="-2" r="1.5" class="fr"/>
+          <circle cx="4" cy="-2" r="1.5" class="fr"/>
+        </g>
+        <g transform="translate(700,85)">
+          <path d="M 0,-30 C 18,-30 32,-15 32,5 C 32,20 18,32 5,32 L -2,42 L -2,33 C -18,31 -32,18 -32,5 C -32,-15 -18,-30 0,-30 Z" class="sv"/>
+          <path d="M -12,2 C -16,2 -16,-6 -10,-6 C -12,-12 -2,-14 2,-10 C 6,-14 14,-10 12,-4 C 16,-4 16,4 10,4 C 12,10 4,14 0,10 C -4,14 -12,10 -10,4 C -14,4 -14,2 -12,2 Z" class="sr" stroke-width="3" fill="none"/>
+          <path d="M 0,-10 C -2,-4 2,2 0,10" class="sr" stroke-width="2"/>
+        </g>
+      </svg>
+    </div>
+    <div class="site-tagline">La newsletter de l'inclusion scolaire</div>
+    <button class="btn-favs" onclick="toggleFavView()">
+      <span>♥</span><span id="fav-btn-label">Mes favoris (<span id="fav-count">0</span>)</span>
+    </button>
+    <button class="btn-favs" onclick="openAdminLogin()" style="background:rgba(0,0,0,.2)">
+      🔒 Admin
+    </button>
+  </div>
+</header>
+
+<!-- ══ LAYOUT ════════════════════════════════════════════════════════ -->
+<div class="page-layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+
+    <!-- Mascotte -->
+    <div class="mascotte-bloc">
+      <div class="mascotte-svg">
+        <!-- Cerveau rose avec yeux, sourire, ampoule et petites jambes -->
+        <svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
+          <!-- Corps cerveau -->
+          <ellipse cx="50" cy="52" rx="34" ry="30" fill="#F06292"/>
+          <!-- Circonvolutions -->
+          <path d="M22,42 Q28,32 36,40 Q42,30 50,38 Q58,28 66,38 Q74,30 78,42" fill="none" stroke="#C2185B" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M18,55 Q22,45 30,52 Q36,44 44,50 Q50,42 56,50 Q62,44 70,52 Q76,46 82,55" fill="none" stroke="#C2185B" stroke-width="2" stroke-linecap="round"/>
+          <!-- Yeux -->
+          <circle cx="38" cy="56" r="5" fill="#fff"/>
+          <circle cx="62" cy="56" r="5" fill="#fff"/>
+          <circle cx="39" cy="57" r="2.5" fill="#333"/>
+          <circle cx="63" cy="57" r="2.5" fill="#333"/>
+          <!-- Reflet yeux -->
+          <circle cx="40" cy="55.5" r="1" fill="#fff"/>
+          <circle cx="64" cy="55.5" r="1" fill="#fff"/>
+          <!-- Sourire -->
+          <path d="M40,67 Q50,75 60,67" fill="none" stroke="#C2185B" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Joues roses -->
+          <circle cx="32" cy="65" r="5" fill="#FF8A80" opacity=".5"/>
+          <circle cx="68" cy="65" r="5" fill="#FF8A80" opacity=".5"/>
+          <!-- Ampoule -->
+          <circle cx="50" cy="14" r="9" fill="#FFF176" stroke="#F9A825" stroke-width="1.5"/>
+          <path d="M46,20 L46,26 L54,26 L54,20" fill="#FFF176" stroke="#F9A825" stroke-width="1.5"/>
+          <line x1="48" y1="26" x2="52" y2="26" stroke="#F9A825" stroke-width="2"/>
+          <line x1="50" y1="5" x2="50" y2="2" stroke="#F9A825" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="41" y1="8" x2="39" y2="6" stroke="#F9A825" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="59" y1="8" x2="61" y2="6" stroke="#F9A825" stroke-width="1.5" stroke-linecap="round"/>
+          <!-- Tige ampoule -> cerveau -->
+          <line x1="50" y1="23" x2="50" y2="30" stroke="#F9A825" stroke-width="1.5"/>
+          <!-- Bras gauche levé -->
+          <path d="M18,50 Q10,40 14,32" fill="none" stroke="#F06292" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="14" cy="31" r="4" fill="#F06292"/>
+          <!-- Bras droit -->
+          <path d="M82,50 Q90,45 88,38" fill="none" stroke="#F06292" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="88" cy="37" r="4" fill="#F06292"/>
+          <!-- Jambes -->
+          <path d="M42,80 L38,105 L35,115" fill="none" stroke="#F06292" stroke-width="5" stroke-linecap="round"/>
+          <path d="M58,80 L62,105 L65,115" fill="none" stroke="#F06292" stroke-width="5" stroke-linecap="round"/>
+          <!-- Chaussures -->
+          <ellipse cx="33" cy="117" rx="8" ry="4" fill="#37A955"/>
+          <ellipse cx="67" cy="117" rx="8" ry="4" fill="#37A955"/>
+        </svg>
+      </div>
+      <p class="mascotte-texte">
+        L'Inclusive est une ressource <strong>gratuite</strong> et accessible à tous.<br>
+        Aucune inscription requise.
+      </p>
+    </div>
+
+    <!-- Navigation catégories -->
+    <div class="nav-section">
+      <div class="nav-title">Thématiques</div>
+      <div id="nav-list"></div>
+    </div>
+
+  </aside>
+
+  <!-- ── CONTENU ── -->
+  <main class="main">
+    <div class="search-bar">
+      <span>🔍</span>
+      <input type="text" id="search" placeholder="Rechercher un numéro…" oninput="onSearch()" autocomplete="off">
+    </div>
+
+    <!-- ── BANDEAUX (visibles uniquement sur la vue "Tous") ── -->
+    <div class="bandeaux-zone" id="bandeaux-zone">
+
+      <!-- Plus consultée -->
+      <div class="bandeau bandeau-vues">
+        <div class="bandeau-header">
+          <span class="ico-bnd">👁️‍🗨️</span> Plus consultée
+        </div>
+        <div id="bnd-vues"></div>
+      </div>
+
+      <!-- Plus téléchargée -->
+      <div class="bandeau bandeau-dl">
+        <div class="bandeau-header">
+          <span class="ico-bnd">⬇️</span> Plus téléchargée
+        </div>
+        <div id="bnd-dl"></div>
+      </div>
+
+      <!-- Dernières parutions -->
+      <div class="bandeau-recents">
+        <div class="bandeau-header">
+          <span class="ico-bnd">🆕</span> Dernières parutions
+        </div>
+        <div id="bnd-recents"></div>
+      </div>
+
+    </div><!-- /bandeaux-zone -->
+
+    <div class="section-head" id="section-label">Tous les numéros</div>
+    <div class="grid" id="grid"></div>
+  </main>
+
+</div><!-- /page-layout -->
+
+<!-- ══ MODALE ════════════════════════════════════════════════════════ -->
+<div class="overlay" id="overlay" onclick="closeOverlay(event)">
+  <div class="modal" id="modal-box">
+    <div class="modal-head">
+      <span class="modal-cat-badge" id="m-cat"></span>
+      <div class="modal-info">
+        <div class="modal-num" id="m-num"></div>
+        <div class="modal-title" id="m-title"></div>
+      </div>
+      <div class="modal-btns">
+        <button class="btn-dl" onclick="dlCurrent()">⬇ Télécharger</button>
+        <button class="btn-close" onclick="closeModal()">×</button>
+      </div>
+    </div>
+    <div class="modal-pdf" id="m-pdf-zone">
+      <div class="pdf-ph" id="m-ph">
+        <div class="ico">📄</div>
+        <div>Le PDF sera affiché ici</div>
+        <div style="font-size:11px;margin-top:5px;opacity:.6">Ajoutez le fichier PDF dans le dossier pdfs/</div>
+      </div>
+      <iframe id="m-iframe" src="" style="display:none"></iframe>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-fav-modal" id="m-fav-btn" onclick="toggleFavCurrent()">
+        <span id="m-fav-heart">♡</span>
+        <span id="m-fav-label">Ajouter aux favoris</span>
+      </button>
+      <div class="modal-nav">
+        <button class="btn-nav" id="btn-prev" onclick="navigate(-1)">← Précédent</button>
+        <button class="btn-nav" id="btn-next" onclick="navigate(1)">Suivant →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOGIN ADMIN ════════════════════════════════════════════════════ -->
+<div class="admin-login-overlay" id="admin-login-overlay">
+  <div class="login-box">
+    <div class="login-mini" style="margin:0 auto 16px;width:100px;height:40px;background:var(--vert-pale);border-radius:8px;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:3px">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 500" style="width:100%;height:100%">
+        <text x="90" y="310" style="font-family:Arial,sans-serif;font-weight:bold;font-size:140px;fill:#00b3c6">#</text>
+        <path d="M 285,150 L 285,310 C 285,325 295,335 310,335 L 375,335 C 385,335 390,330 390,323 C 390,315 385,312 375,312 L 312,312 L 312,150 Z" fill="#37A955"/>
+        <text x="415" y="312" style="font-family:'Century Gothic','Segoe UI',Arial,sans-serif;font-weight:bold;font-size:135px;fill:#37A955">inclusive</text>
+      </svg>
+    </div>
+    <h2>Espace administration</h2>
+    <p>Accès réservé à Gabrielle et Édith</p>
+    <input class="login-field" type="password" id="pwd-input" placeholder="Mot de passe"
+      onkeydown="if(event.key==='Enter')checkPwd()">
+    <div class="login-err" id="login-err"></div>
+    <button class="btn-login" onclick="checkPwd()">Accéder</button>
+    <button onclick="closeAdminLogin()" style="margin-top:12px;font-size:13px;color:var(--gris);display:block;width:100%">
+      Retour au site
+    </button>
+  </div>
+</div>
+
+<!-- ══ INTERFACE ADMIN ═════════════════════════════════════════════════ -->
+<div class="admin-ui" id="admin-ui">
+
+  <!-- Barre de navigation admin -->
+  <div class="admin-bar">
+    <div>
+      <div class="a-title">🛠 Administration</div>
+      <div class="a-site-name">L'Inclusive</div>
+    </div>
+    <button class="btn-admin-nav" id="anav-dash"   onclick="showAdminScreen('dash')">📊 Tableau de bord</button>
+    <button class="btn-admin-nav" id="anav-new"    onclick="showAdminScreen('new')">＋ Nouvelle Inclusive</button>
+    <button class="btn-admin-nav" id="anav-manage" onclick="showAdminScreen('manage')">📋 Gérer</button>
+    <button class="btn-admin-nav" id="anav-data"   onclick="showAdminScreen('data')">💾 Données</button>
+    <button class="btn-public" onclick="closeAdmin()">👁 Vue publique</button>
+    <button class="btn-logout" onclick="logout()">Déconnexion</button>
+  </div>
+
+  <div class="admin-content">
+
+    <!-- ── TABLEAU DE BORD ── -->
+    <div class="admin-screen active" id="ascreen-dash">
+      <div class="admin-h">Tableau de bord</div>
+      <div class="admin-sub">Vue d'ensemble de la bibliothèque L'Inclusive</div>
+      <div class="dash-stats" id="dash-stats"></div>
+      <div class="dash-recent-title">Tous les numéros — du plus récent au plus ancien</div>
+      <div class="dash-list" id="dash-list"></div>
+    </div>
+
+    <!-- ── NOUVELLE INCLUSIVE ── -->
+    <div class="admin-screen" id="ascreen-new">
+      <div class="admin-h" id="form-title">Nouvelle Inclusive</div>
+      <div class="admin-sub">Remplissez les informations puis déposez le PDF et l'image sur GitHub</div>
+
+      <div class="form-notice">
+        <strong>📁 Avant de publier :</strong> déposez le fichier PDF dans le dossier <code>pdfs/</code>
+        et l'image de couverture dans <code>images/</code> de votre dépôt GitHub.<br>
+        Nommez-les exactement comme indiqué ci-dessous (ex: <code>inclusive-43.pdf</code>).
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Numéro *</label>
+          <input class="form-input" id="f-num" type="text" placeholder="43">
+          <span class="form-hint">Pour les bonus : B3, B4…</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Date de parution</label>
+          <input class="form-input" id="f-date" type="text" placeholder="15 septembre 2026">
+        </div>
+        <div class="form-group full">
+          <label class="form-label">Titre *</label>
+          <input class="form-input" id="f-titre" type="text" placeholder="Titre de l'Inclusive">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Catégorie *</label>
+          <select class="form-select" id="f-cat">
+            <option value="">— Choisir —</option>
+            <option>Généralités</option>
+            <option>Attention</option>
+            <option>Mémorisation</option>
+            <option>Accessibilité</option>
+            <option>Charge cognitive</option>
+            <option>AESH</option>
+            <option>Ressource bonus</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Ressource bonus ?</label>
+          <select class="form-select" id="f-bonus">
+            <option value="false">Non — numéro normal</option>
+            <option value="true">Oui — ressource bonus</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom du fichier PDF</label>
+          <input class="form-input" id="f-pdf" type="text" placeholder="inclusive-43.pdf">
+          <span class="form-hint">Sera cherché dans le dossier <code>pdfs/</code></span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom de l'image de couverture</label>
+          <input class="form-input" id="f-img" type="text" placeholder="inclusive-43.jpg">
+          <span class="form-hint">Sera cherchée dans le dossier <code>images/</code></span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn-save" onclick="saveInclusive('publie')">✅ Enregistrer et publier</button>
+        <button class="btn-draft" onclick="saveInclusive('brouillon')">📝 Enregistrer en brouillon</button>
+        <button class="btn-cancel-form" onclick="resetForm();showAdminScreen('manage')">Annuler</button>
+      </div>
+      <div id="form-err" style="color:#E53935;font-size:13px;margin-top:10px"></div>
+    </div>
+
+    <!-- ── GÉRER ── -->
+    <div class="admin-screen" id="ascreen-manage">
+      <div class="admin-h">Gérer les Inclusives</div>
+      <div class="admin-sub">Modifiez, publiez ou supprimez les numéros existants</div>
+      <div class="manage-filters">
+        <input class="manage-search" type="text" id="manage-search"
+          placeholder="Rechercher…" oninput="buildManageTable()">
+        <select class="form-select" id="manage-filter-cat" onchange="buildManageTable()"
+          style="max-width:200px;padding:8px 12px">
+          <option value="">Toutes les catégories</option>
+          <option>Généralités</option><option>Attention</option>
+          <option>Mémorisation</option><option>Accessibilité</option>
+          <option>Charge cognitive</option><option>AESH</option>
+          <option>Ressource bonus</option>
+        </select>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>N°</th><th>Titre</th><th>Catégorie</th>
+              <th>Date</th><th>Statut</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="manage-tbody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ── DONNÉES ── -->
+    <div class="admin-screen" id="ascreen-data">
+      <div class="admin-h">Données</div>
+      <div class="admin-sub">Export et paramètres de la bibliothèque</div>
+
+      <div class="data-card">
+        <div class="data-card-info">
+          <h3>📄 Exporter la liste complète</h3>
+          <p>Télécharge un fichier JSON avec tous les numéros et leurs informations.<br>
+          Utile pour sauvegarder ou transférer les données.</p>
+        </div>
+        <button class="btn-export" onclick="exportJSON()">⬇ Exporter JSON</button>
+      </div>
+
+      <div class="data-card">
+        <div class="data-card-info">
+          <h3>📋 Copier le bloc de données</h3>
+          <p>Copie le contenu du tableau DATA prêt à coller dans le fichier HTML.<br>
+          À utiliser après modification pour mettre à jour le site sur GitHub.</p>
+        </div>
+        <button class="btn-export" onclick="copyDataBlock()" style="background:var(--vert)">📋 Copier</button>
+      </div>
+
+      <div class="pwd-change">
+        <h3>🔑 Changer le mot de passe admin</h3>
+        <div class="pwd-row">
+          <input class="form-input" type="password" id="pwd-new" placeholder="Nouveau mot de passe">
+          <input class="form-input" type="password" id="pwd-confirm" placeholder="Confirmer">
+          <button class="btn-save" onclick="changePwd()">Valider</button>
+        </div>
+        <div id="pwd-msg" style="font-size:12px;margin-top:8px"></div>
+      </div>
+    </div>
+
+  </div><!-- /admin-content -->
+</div><!-- /admin-ui -->
+
+<!-- ══ TOAST ══════════════════════════════════════════════════════════ -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   ▌ DONNÉES — L'Inclusive
+   ▌
+   ▌ Pour ajouter un nouveau numéro :
+   ▌  1. Copiez un bloc { ... } ci-dessous
+   ▌  2. Remplissez :
+   ▌     num    → numéro (ex: 43)
+   ▌     titre  → titre exact
+   ▌     cat    → catégorie exacte (voir liste existante)
+   ▌     date   → "15 janvier 2025"  (ou "" si inconnue)
+   ▌     pdf    → "pdfs/inclusive-43.pdf"
+   ▌     img    → "images/inclusive-43.jpg"  (miniature 1re page)
+   ▌             laissez "" si pas encore disponible
+   ▌     bonus  → true uniquement pour les ressources bonus
+   ═══════════════════════════════════════════════════════════════════ */
+const DATA = [
+  {num:1,  titre:"Le handicap invisible",                                             cat:"Généralités",      date:"",              pdf:"pdfs/inclusive-01.pdf", img:"",bonus:false},
+  {num:2,  titre:"L'attention sélective",                                             cat:"Attention",        date:"",              pdf:"pdfs/inclusive-02.pdf", img:"",bonus:false},
+  {num:3,  titre:"L'attention soutenue",                                              cat:"Attention",        date:"",              pdf:"pdfs/inclusive-03.pdf", img:"",bonus:false},
+  {num:4,  titre:"Mémoriser avec Learning apps",                                      cat:"Mémorisation",     date:"",              pdf:"pdfs/inclusive-04.pdf", img:"",bonus:false},
+  {num:5,  titre:"L'attention divisée",                                               cat:"Attention",        date:"",              pdf:"pdfs/inclusive-05.pdf", img:"",bonus:false},
+  {num:6,  titre:"Adapter un texte",                                                  cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-06.pdf", img:"",bonus:false},
+  {num:7,  titre:"Utiliser les styles et modèles pour adapter un texte",             cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-07.pdf", img:"",bonus:false},
+  {num:8,  titre:"La charge cognitive",                                               cat:"Charge cognitive", date:"",              pdf:"pdfs/inclusive-08.pdf", img:"",bonus:false},
+  {num:9,  titre:"Les problèmes résolus",                                             cat:"Charge cognitive", date:"",              pdf:"pdfs/inclusive-09.pdf", img:"",bonus:false},
+  {num:10, titre:"Travailler à partir de problèmes à compléter",                     cat:"Charge cognitive", date:"",              pdf:"pdfs/inclusive-10.pdf", img:"",bonus:false},
+  {num:11, titre:"Travailler à partir de problèmes par paire",                       cat:"Charge cognitive", date:"",              pdf:"pdfs/inclusive-11.pdf", img:"",bonus:false},
+  {num:12, titre:"Exploiter le chaînage arrière",                                    cat:"Charge cognitive", date:"",              pdf:"pdfs/inclusive-12.pdf", img:"",bonus:false},
+  {num:13, titre:"Composer avec le principe de redondance",                          cat:"Charge cognitive", date:"",              pdf:"pdfs/inclusive-13.pdf", img:"",bonus:false},
+  {num:14, titre:"Utiliser Google Lens pour l'accessibilité",                        cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-14.pdf", img:"",bonus:false},
+  {num:15, titre:"L'IA au service de l'inclusion avancée",                           cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-15.pdf", img:"",bonus:false},
+  {num:16, titre:"En vacances 2024",                                                  cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-16.pdf", img:"",bonus:false},
+  {num:17, titre:"Privilégier l'accessibilité",                                       cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-17.pdf", img:"",bonus:false},
+  {num:18, titre:"Expliciter",                                                         cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-18.pdf", img:"",bonus:false},
+  {num:19, titre:"Mizou : IA robot dans ma classe",                                  cat:"Mémorisation",     date:"",              pdf:"pdfs/inclusive-19.pdf", img:"",bonus:false},
+  {num:20, titre:"AESH et enseignant : un duo clé pour l'inclusion",                 cat:"AESH",             date:"",              pdf:"pdfs/inclusive-20.pdf", img:"",bonus:false},
+  {num:21, titre:"AESH et enseignant : la force de la communication",                cat:"AESH",             date:"",              pdf:"pdfs/inclusive-21.pdf", img:"",bonus:false},
+  {num:22, titre:"Kezako : le GEVA-Sco ?",                                            cat:"Généralités",      date:"",              pdf:"pdfs/inclusive-22.pdf", img:"",bonus:false},
+  {num:23, titre:"Le GEVA-Sco : rubrique « scolarisation »",                         cat:"Généralités",      date:"",              pdf:"pdfs/inclusive-23.pdf", img:"",bonus:false},
+  {num:24, titre:"Le GEVA-Sco : rubrique « observations »",                          cat:"Généralités",      date:"",              pdf:"pdfs/inclusive-24.pdf", img:"",bonus:false},
+  {num:25, titre:"Le GEVA-Sco : rubrique « bilan »",                                 cat:"Généralités",      date:"",              pdf:"pdfs/inclusive-25.pdf", img:"",bonus:false},
+  {num:26, titre:"Le GEVA-Sco : rubrique « perspectives »",                          cat:"Généralités",      date:"",              pdf:"pdfs/inclusive-26.pdf", img:"",bonus:false},
+  {num:27, titre:"Napkin : une IA bête pour des visuels explicites",                 cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-27.pdf", img:"",bonus:false},
+  {num:28, titre:"Se soucier du principe de contiguïté spatiale",                    cat:"Charge cognitive", date:"",              pdf:"pdfs/inclusive-28.pdf", img:"",bonus:false},
+  {num:29, titre:"Un diaporama clair en 5 minutes ? Oui avec Gamma IA",             cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-29.pdf", img:"",bonus:false},
+  {num:30, titre:"Respecter le principe de contiguïté temporelle",                   cat:"Charge cognitive", date:"",              pdf:"pdfs/inclusive-30.pdf", img:"",bonus:false},
+  {num:31, titre:"NotebookLM",                                                         cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-31.pdf", img:"",bonus:false},
+  {num:32, titre:"Du bon usage du surlignage",                                        cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-32.pdf", img:"",bonus:false},
+  {num:33, titre:"Le FALC : Facile à lire, facile à inclure",                        cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-33.pdf", img:"",bonus:false},
+  {num:34, titre:"La collaboration enseignant – personne ressource",                 cat:"Généralités",      date:"",              pdf:"pdfs/inclusive-34.pdf", img:"",bonus:false},
+  {num:35, titre:"Mémoriser durablement des savoirs",                                cat:"Mémorisation",     date:"",              pdf:"pdfs/inclusive-35.pdf", img:"",bonus:false},
+  {num:36, titre:"Mémoriser durablement des savoirs (suite)",                        cat:"Mémorisation",     date:"",              pdf:"pdfs/inclusive-36.pdf", img:"",bonus:false},
+  {num:37, titre:"Mémoriser durablement des gestes",                                 cat:"Mémorisation",     date:"",              pdf:"pdfs/inclusive-37.pdf", img:"",bonus:false},
+  {num:38, titre:"L'erreur : une information",                                        cat:"Mémorisation",     date:"",              pdf:"pdfs/inclusive-38.pdf", img:"",bonus:false},
+  {num:39, titre:"L'erreur : un levier",                                              cat:"Généralités",      date:"",              pdf:"pdfs/inclusive-39.pdf", img:"",bonus:false},
+  {num:40, titre:"Donner de la voix aux apprentissages : Vocaroo",                   cat:"Accessibilité",    date:"",              pdf:"pdfs/inclusive-40.pdf", img:"",bonus:false},
+  {num:41, titre:"Les feedbacks : du jugement au guidage",                           cat:"Mémorisation",     date:"13 mai 2026",   pdf:"pdfs/inclusive-41.pdf", img:"images/inclusive-41.jpg",bonus:false},
+  {num:42, titre:"Gagner en autonomie numérique : petites astuces, grands effets",  cat:"Accessibilité",    date:"10 juin 2026",  pdf:"pdfs/inclusive-42.pdf", img:"images/inclusive-42.jpg",bonus:false},
+  /* ── RESSOURCES BONUS ── */
+  {num:"B1",titre:"Modèle Word et Office tout adapté",                               cat:"Ressource bonus",  date:"",              pdf:"pdfs/inclusive-B1.pdf", img:"",bonus:true},
+  {num:"B2",titre:"Cahier de vacances : Podcast",                                    cat:"Ressource bonus",  date:"",              pdf:"pdfs/inclusive-B2.pdf", img:"",bonus:true},
+];
+
+/* ── Compteurs simulés (localStorage par navigateur) ─────────────── */
+const CK = "linclusive_counters_v1";
+let counters = JSON.parse(localStorage.getItem(CK)||"{}");
+function getCount(num,type){ return counters[`${num}_${type}`]||0; }
+function incCount(num,type){
+  const k=`${num}_${type}`;
+  counters[k]=(counters[k]||0)+1;
+  localStorage.setItem(CK,JSON.stringify(counters));
+}
+
+/* ── Trouver le top par type parmi les numéros non-bonus ─────────── */
+function topByCount(type,n=1){
+  return [...DATA]
+    .filter(d=>!d.bonus)
+    .sort((a,b)=>getCount(b.num,type)-getCount(a.num,type))
+    .slice(0,n);
+}
+
+/* ── Dernières parutions (2 numéros non-bonus les plus récents) ───── */
+function derniers(){
+  return [...DATA].filter(d=>!d.bonus)
+    .sort((a,b)=>Number(b.num)-Number(a.num))
+    .slice(0,2);
+}
+
+/* ── Rendu vignette miniature (bandeau) ──────────────────────────── */
+function bndThumb(d, cls="bnd-thumb"){
+  const col=(COLORS[d.cat]||{bg:"#546E7A"}).bg;
+  const label=`#${d.num}`;
+  if(d.img) return `<div class="${cls}" style="background:${col}">
+    <img src="${d.img}" alt="${label}" onerror="this.parentElement.innerHTML='${label}'">
+  </div>`;
+  return `<div class="${cls}" style="background:${col}">${label}</div>`;
+}
+
+/* ── Rendu des bandeaux ──────────────────────────────────────────── */
+function buildBandeaux(){
+  /* Masquer si filtre ou recherche actifs */
+  const q=document.getElementById("search").value.trim();
+  const hide=showFavOnly||(activeFilter!=="Tous")||q;
+  document.getElementById("bandeaux-zone").classList.toggle("hidden",hide);
+  if(hide)return;
+
+  /* Top vues */
+  const topV=topByCount("vues",3);
+  document.getElementById("bnd-vues").innerHTML=topV.map((d,i)=>{
+    const v=getCount(d.num,"vues");
+    return `<div class="bandeau-row" onclick="openByNum(${d.num})">
+      <span class="bnd-rank">${i+1}</span>
+      ${bndThumb(d)}
+      <div class="bnd-info">
+        <div class="bnd-num">N° ${d.num}</div>
+        <div class="bnd-title">${d.titre}</div>
+      </div>
+      <span class="bnd-stat">${v} vue${v!==1?"s":""}</span>
+    </div>`;
+  }).join("");
+
+  /* Top téléchargements */
+  const topD=topByCount("dl",3);
+  document.getElementById("bnd-dl").innerHTML=topD.map((d,i)=>{
+    const v=getCount(d.num,"dl");
+    return `<div class="bandeau-row" onclick="openByNum(${d.num})">
+      <span class="bnd-rank">${i+1}</span>
+      ${bndThumb(d)}
+      <div class="bnd-info">
+        <div class="bnd-num">N° ${d.num}</div>
+        <div class="bnd-title">${d.titre}</div>
+      </div>
+      <span class="bnd-stat">${v} dl</span>
+    </div>`;
+  }).join("");
+
+  /* Dernières parutions */
+  const rec=derniers();
+  document.getElementById("bnd-recents").innerHTML=rec.map(d=>`
+    <div class="recent-item" onclick="openByNum(${d.num})">
+      ${bndThumb(d,"recent-thumb")}
+      <div class="recent-info">
+        <div class="recent-num">N° ${d.num}</div>
+        <div class="recent-title">${d.titre}</div>
+        <span class="recent-cat">${d.cat}</span>
+        ${d.date?`<div class="recent-date">${d.date}</div>`:""}
+      </div>
+    </div>`).join("");
+}
+
+/* ── Ouvrir une modale par numéro ────────────────────────────────── */
+function openByNum(num){
+  /* On cherche dans la liste filtrée courante, sinon dans DATA complet */
+  let idx=filtered.findIndex(d=>d.num===num);
+  if(idx===-1){
+    /* Reset filtre pour pouvoir naviguer */
+    activeFilter="Tous";showFavOnly=false;
+    document.getElementById("search").value="";
+    buildNav();render();buildBandeaux();
+    idx=filtered.findIndex(d=>d.num===num);
+  }
+  if(idx!==-1) openModal(idx);
+}
+const COLORS = {
+  "Généralités":      {bg:"#1565C0",txt:"#fff"},
+  "Attention":        {bg:"#6A1B9A",txt:"#fff"},
+  "Mémorisation":     {bg:"#E65100",txt:"#fff"},
+  "Accessibilité":    {bg:"#2E7D32",txt:"#fff"},
+  "Charge cognitive": {bg:"#00695C",txt:"#fff"},
+  "AESH":             {bg:"#AD1457",txt:"#fff"},
+  "Ressource bonus":  {bg:"#F9A825",txt:"#fff"},
+};
+const DOT_COLORS = {
+  "Généralités":"#1565C0","Attention":"#6A1B9A","Mémorisation":"#E65100",
+  "Accessibilité":"#2E7D32","Charge cognitive":"#00695C",
+  "AESH":"#AD1457","Ressource bonus":"#F9A825"
+};
+
+/* ── Favoris ─────────────────────────────────────────────────────── */
+const FK = "linclusive_favs_v2";
+let favs = new Set(JSON.parse(localStorage.getItem(FK)||"[]"));
+const saveFavs = () => localStorage.setItem(FK,JSON.stringify([...favs]));
+const isFav = n => favs.has(String(n));
+function toggleFav(n){
+  const k = String(n);
+  if(favs.has(k)){favs.delete(k);toast("Retiré des favoris")}
+  else{favs.add(k);toast("Ajouté aux favoris ♥")}
+  saveFavs(); updateFavCount();
+}
+
+function updateFavCount(){
+  document.getElementById("fav-count").textContent = favs.size;
+}
+
+/* ── État ────────────────────────────────────────────────────────── */
+let activeFilter = "Tous";
+let showFavOnly  = false;
+let filtered     = [];
+let curIdx       = -1;
+
+/* ── Sidebar nav ─────────────────────────────────────────────────── */
+function buildNav(){
+  const cats = ["Tous",...Object.keys(COLORS)];
+  const list = document.getElementById("nav-list");
+  list.innerHTML = cats.map(c=>{
+    const count = c==="Tous" ? DATA.length : DATA.filter(d=>d.cat===c).length;
+    const active = activeFilter===c&&!showFavOnly ? "active":"";
+    const dot = c!=="Tous" ? `<span class="dot" style="background:${DOT_COLORS[c]||'#999'}"></span>`:
+                             `<span class="dot" style="background:#999"></span>`;
+    return `<button class="nav-pill ${active}" onclick="setFilter('${c}')">
+      ${dot}${c}<span class="nav-count">${count}</span>
+    </button>`;
+  }).join("");
+}
+
+function setFilter(cat){
+  activeFilter = cat; showFavOnly = false;
+  document.getElementById("fav-btn-label").innerHTML = `Mes favoris (<span id="fav-count">${favs.size}</span>)`;
+  buildNav(); render(); buildBandeaux();
+}
+
+function toggleFavView(){
+  showFavOnly = !showFavOnly;
+  if(!showFavOnly){
+    document.getElementById("fav-btn-label").innerHTML = `Mes favoris (<span id="fav-count">${favs.size}</span>)`;
+  }
+  buildNav(); render(); buildBandeaux();
+}
+
+function onSearch(){ render(); buildBandeaux(); }
+
+/* ── Rendu grille ────────────────────────────────────────────────── */
+function render(){
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  filtered = DATA.filter(d=>{
+    const matchCat = activeFilter==="Tous"||d.cat===activeFilter;
+    const matchFav = !showFavOnly||isFav(d.num);
+    const matchQ   = !q||d.titre.toLowerCase().includes(q)||d.cat.toLowerCase().includes(q)||String(d.num).toLowerCase().includes(q);
+    return matchCat&&matchFav&&matchQ;
+  });
+
+  const label = showFavOnly ? "Mes favoris"
+    : activeFilter==="Tous" ? "Tous les numéros" : activeFilter;
+  document.getElementById("section-label").textContent =
+    `${label} — ${filtered.length} numéro${filtered.length!==1?"s":""}`;
+
+  const grid = document.getElementById("grid");
+  if(!filtered.length){
+    grid.innerHTML=`<div class="empty"><div class="ico">🔍</div><div>Aucun résultat pour cette recherche.</div></div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((d,i)=>{
+    const col = COLORS[d.cat]||{bg:"#546E7A",txt:"#fff"};
+    const fOn = isFav(d.num);
+    const numLabel = d.bonus ? d.num : `#${d.num}`;
+
+    // Vignette : image si dispo, sinon couleur + numéro
+    const thumbContent = d.img
+      ? `<img src="${d.img}" alt="Couverture ${numLabel}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        +`<div class="card-thumb-fallback" style="display:none;background:linear-gradient(135deg,${col.bg}cc,${col.bg});">${numLabel}</div>`
+      : `<div class="card-thumb-fallback" style="background:linear-gradient(135deg,${col.bg}cc,${col.bg});">${numLabel}</div>`;
+
+    return `<article class="card" onclick="openModal(${i})">
+      <div class="card-thumb" style="${!d.img?'background:'+col.bg:''}">
+        ${thumbContent}
+        ${d.bonus?`<span class="badge-bonus">Bonus</span>`:''}
+        <button class="fav-btn ${fOn?'on':''}" onclick="event.stopPropagation();handleFav('${d.num}',this)" title="Favoris">
+          ${fOn?'♥':'♡'}
+        </button>
+      </div>
+      <div class="card-body">
+        <span class="card-cat">${d.cat}</span>
+        <div class="card-title">${d.titre}</div>
+        <div class="card-meta">${d.bonus?'Ressource bonus':`N° ${d.num}`}${d.date?' · '+d.date:''}</div>
+      </div>
+    </article>`;
+  }).join("");
+}
+
+function handleFav(num,btn){
+  toggleFav(num);
+  const on=isFav(num);
+  btn.classList.toggle("on",on);
+  btn.textContent=on?"♥":"♡";
+  if(curIdx>=0&&String(filtered[curIdx]?.num)===String(num)) updateModalFav();
+  if(showFavOnly) render();
+}
+
+/* ── Modale ──────────────────────────────────────────────────────── */
+function openModal(idx){
+  curIdx=idx;
+  const d=filtered[idx];
+  /* Incrémenter le compteur de vues */
+  if(!d.bonus) incCount(d.num,"vues");
+  /* Google Analytics — événement consultation */
+  if(typeof gtag!=="undefined") gtag('event','consultation',{
+    event_category:'Inclusive',
+    event_label:`#${d.num} – ${d.titre}`,
+    value: d.num
+  });
+  document.getElementById("m-cat").textContent   = d.cat;
+  document.getElementById("m-num").textContent   = d.bonus?`Ressource bonus ${d.num}`:`Numéro ${d.num}${d.date?' · '+d.date:''}`;
+  document.getElementById("m-title").textContent = d.titre;
+  const iframe=document.getElementById("m-iframe");
+  const ph=document.getElementById("m-ph");
+  if(d.pdf){iframe.src=d.pdf;iframe.style.display="block";ph.style.display="none"}
+  else{iframe.src="";iframe.style.display="none";ph.style.display="flex";ph.style.flexDirection="column";ph.style.alignItems="center"}
+  updateModalFav();
+  document.getElementById("btn-prev").disabled=idx<=0;
+  document.getElementById("btn-next").disabled=idx>=filtered.length-1;
+  document.getElementById("overlay").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function closeOverlay(e){if(e.target===document.getElementById("overlay"))closeModal()}
+function closeModal(){
+  document.getElementById("overlay").classList.remove("open");
+  document.getElementById("m-iframe").src="";
+  document.body.style.overflow="";
+}
+function dlCurrent(){
+  if(curIdx<0)return;
+  const d=filtered[curIdx];
+  if(!d.pdf){toast("PDF non disponible");return}
+  /* Incrémenter le compteur de téléchargements */
+  if(!d.bonus) incCount(d.num,"dl");
+  /* Google Analytics — événement téléchargement */
+  if(typeof gtag!=="undefined") gtag('event','telechargement',{
+    event_category:'Inclusive',
+    event_label:`#${d.num} – ${d.titre}`,
+    value: d.num
+  });
+  buildBandeaux();
+  const a=document.createElement("a");
+  a.href=d.pdf;
+  a.download=`inclusive-${d.num}.pdf`;
+  a.click();
+}
+function toggleFavCurrent(){
+  if(curIdx<0)return;
+  toggleFav(filtered[curIdx].num);
+  updateModalFav();
+  render();
+}
+function updateModalFav(){
+  const on=isFav(filtered[curIdx]?.num);
+  document.getElementById("m-fav-btn").classList.toggle("on",on);
+  document.getElementById("m-fav-heart").textContent=on?"♥":"♡";
+  document.getElementById("m-fav-label").textContent=on?"Dans vos favoris":"Ajouter aux favoris";
+}
+function navigate(dir){
+  const n=curIdx+dir;
+  if(n<0||n>=filtered.length)return;
+  openModal(n);
+}
+
+/* ── Toast ───────────────────────────────────────────────────────── */
+let toastT;
+function toast(msg){
+  const el=document.getElementById("toast");
+  el.textContent=msg;el.classList.add("show");
+  clearTimeout(toastT);toastT=setTimeout(()=>el.classList.remove("show"),2200);
+}
+
+/* ── Clavier ─────────────────────────────────────────────────────── */
+document.addEventListener("keydown",e=>{
+  if(!document.getElementById("overlay").classList.contains("open"))return;
+  if(e.key==="Escape")closeModal();
+  if(e.key==="ArrowLeft")navigate(-1);
+  if(e.key==="ArrowRight")navigate(1);
+});
+
+/* ═══════════════════════════════════════════════════════════════════
+   ▌ BACK-OFFICE ADMIN
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Mot de passe (stocké en localStorage, modifiable) ───────────── */
+const PWD_KEY = "linclusive_admin_pwd";
+const DEFAULT_PWD = "inclusive2026";
+function getPwd(){ return localStorage.getItem(PWD_KEY)||DEFAULT_PWD; }
+
+/* ── Données admin (brouillons + publiés) ────────────────────────── */
+/* On fusionne DATA (données initiales) avec les modifications admin */
+const ADMIN_KEY = "linclusive_admin_data";
+function loadAdminData(){
+  const saved = localStorage.getItem(ADMIN_KEY);
+  if(saved) return JSON.parse(saved);
+  /* Premier lancement : on copie DATA avec statut "publie" */
+  return DATA.map(d=>({...d, statut:"publie"}));
+}
+function saveAdminData(arr){ localStorage.setItem(ADMIN_KEY,JSON.stringify(arr)); }
+let adminData = loadAdminData();
+
+/* Synchroniser DATA public avec adminData publiés */
+function syncPublic(){
+  /* Remplace le contenu de DATA par les entrées publiées */
+  DATA.length=0;
+  adminData.filter(d=>d.statut==="publie").forEach(d=>DATA.push(d));
+  render(); buildBandeaux(); buildNav();
+}
+
+/* ── Login ────────────────────────────────────────────────────────── */
+function openAdminLogin(){
+  document.getElementById("admin-login-overlay").classList.add("open");
+  document.getElementById("pwd-input").value="";
+  document.getElementById("login-err").textContent="";
+  setTimeout(()=>document.getElementById("pwd-input").focus(),100);
+}
+function closeAdminLogin(){
+  document.getElementById("admin-login-overlay").classList.remove("open");
+}
+function checkPwd(){
+  const v = document.getElementById("pwd-input").value;
+  if(v===getPwd()){
+    closeAdminLogin();
+    openAdmin();
+  } else {
+    document.getElementById("login-err").textContent="Mot de passe incorrect.";
+    document.getElementById("pwd-input").value="";
+    document.getElementById("pwd-input").focus();
+  }
+}
+
+/* ── Ouvrir / fermer l'admin ──────────────────────────────────────── */
+function openAdmin(){
+  document.getElementById("admin-ui").classList.add("open");
+  document.body.style.overflow="hidden";
+  showAdminScreen("dash");
+}
+function closeAdmin(){
+  document.getElementById("admin-ui").classList.remove("open");
+  document.body.style.overflow="";
+}
+function logout(){
+  closeAdmin();
+  toast("Déconnecté de l'administration");
+}
+
+/* ── Navigation entre sections ────────────────────────────────────── */
+function showAdminScreen(name){
+  ["dash","new","manage","data"].forEach(n=>{
+    document.getElementById(`ascreen-${n}`).classList.toggle("active",n===name);
+    document.getElementById(`anav-${n}`).classList.toggle("active",n===name);
+  });
+  if(name==="dash")   buildDash();
+  if(name==="manage") buildManageTable();
+}
+
+/* ── Tableau de bord ──────────────────────────────────────────────── */
+function buildDash(){
+  const pubCount  = adminData.filter(d=>d.statut==="publie"&&!d.bonus).length;
+  const draftCount= adminData.filter(d=>d.statut==="brouillon").length;
+  const bonusCount= adminData.filter(d=>d.bonus).length;
+  const totalVues = adminData.reduce((s,d)=>s+getCount(d.num,"vues"),0);
+
+  document.getElementById("dash-stats").innerHTML=`
+    <div class="dash-stat"><span class="ds-num">${pubCount}</span><div class="ds-label">Numéros publiés</div></div>
+    <div class="dash-stat"><span class="ds-num" style="color:var(--or)">${draftCount}</span><div class="ds-label">Brouillons</div></div>
+    <div class="dash-stat"><span class="ds-num" style="color:var(--rose)">${bonusCount}</span><div class="ds-label">Ressources bonus</div></div>
+    <div class="dash-stat"><span class="ds-num" style="color:var(--cyan)">${totalVues}</span><div class="ds-label">Consultations totales</div></div>
+  `;
+
+  const sorted=[...adminData].filter(d=>!d.bonus).sort((a,b)=>Number(b.num)-Number(a.num));
+  const col=n=>DOT_COLORS[n]||"#999";
+  document.getElementById("dash-list").innerHTML=sorted.map(d=>`
+    <div class="dash-row">
+      <div class="dash-num-badge">#${d.num}</div>
+      <div>
+        <span class="dash-cat-dot" style="background:${col(d.cat)}"></span>
+        <strong>${d.titre}</strong>
+        <span style="color:var(--gris);font-size:11px;margin-left:6px">${d.cat}</span>
+      </div>
+      <span style="font-size:11px;color:var(--gris)">${d.date||"—"}</span>
+      <span class="${d.statut==="publie"?"status-pub":"status-draft"}">
+        ${d.statut==="publie"?"Publié":"Brouillon"}
+      </span>
+    </div>`).join("");
+}
+
+/* ── Formulaire ajout / édition ───────────────────────────────────── */
+let editingNum = null; // null = nouveau, sinon numéro en cours d'édition
+
+function resetForm(){
+  editingNum=null;
+  document.getElementById("form-title").textContent="Nouvelle Inclusive";
+  ["f-num","f-date","f-titre","f-pdf","f-img"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("f-cat").value="";
+  document.getElementById("f-bonus").value="false";
+  document.getElementById("form-err").textContent="";
+}
+
+function editInclusive(num){
+  const d=adminData.find(x=>String(x.num)===String(num));
+  if(!d)return;
+  editingNum=num;
+  document.getElementById("form-title").textContent=`Modifier — N° ${d.num}`;
+  document.getElementById("f-num").value=d.num;
+  document.getElementById("f-date").value=d.date||"";
+  document.getElementById("f-titre").value=d.titre;
+  document.getElementById("f-cat").value=d.cat;
+  document.getElementById("f-bonus").value=String(d.bonus);
+  /* Extraire juste le nom de fichier */
+  document.getElementById("f-pdf").value=(d.pdf||"").replace("pdfs/","");
+  document.getElementById("f-img").value=(d.img||"").replace("images/","");
+  document.getElementById("form-err").textContent="";
+  showAdminScreen("new");
+}
+
+function saveInclusive(statut){
+  const num   = document.getElementById("f-num").value.trim();
+  const titre = document.getElementById("f-titre").value.trim();
+  const cat   = document.getElementById("f-cat").value;
+  const err   = document.getElementById("form-err");
+
+  if(!num)  { err.textContent="Le numéro est obligatoire."; return; }
+  if(!titre){ err.textContent="Le titre est obligatoire.";  return; }
+  if(!cat)  { err.textContent="La catégorie est obligatoire."; return; }
+
+  /* Vérifier doublon si nouveau */
+  if(!editingNum && adminData.find(d=>String(d.num)===num)){
+    err.textContent=`Le numéro ${num} existe déjà.`; return;
+  }
+
+  const pdfFile = document.getElementById("f-pdf").value.trim();
+  const imgFile = document.getElementById("f-img").value.trim();
+  const entry={
+    num:    isNaN(num)?num:Number(num),
+    titre,
+    cat,
+    date:   document.getElementById("f-date").value.trim(),
+    pdf:    pdfFile  ? `pdfs/${pdfFile}`   : "",
+    img:    imgFile  ? `images/${imgFile}` : "",
+    bonus:  document.getElementById("f-bonus").value==="true",
+    statut,
+  };
+
+  if(editingNum){
+    const idx=adminData.findIndex(d=>String(d.num)===String(editingNum));
+    if(idx!==-1) adminData[idx]=entry;
+  } else {
+    adminData.push(entry);
+  }
+  saveAdminData(adminData);
+  syncPublic();
+  resetForm();
+  showAdminScreen("manage");
+  toast(statut==="publie"?"✅ Numéro publié !":"📝 Brouillon enregistré");
+}
+
+/* ── Table de gestion ─────────────────────────────────────────────── */
+function buildManageTable(){
+  const q   =(document.getElementById("manage-search")?.value||"").toLowerCase();
+  const cat = document.getElementById("manage-filter-cat")?.value||"";
+  const rows=[...adminData]
+    .sort((a,b)=>Number(b.num)-Number(a.num)||String(b.num).localeCompare(String(a.num)))
+    .filter(d=>{
+      const mq=!q||d.titre.toLowerCase().includes(q)||String(d.num).includes(q);
+      const mc=!cat||d.cat===cat;
+      return mq&&mc;
+    });
+
+  document.getElementById("manage-tbody").innerHTML=rows.map(d=>`
+    <tr>
+      <td><span class="tbl-num">${d.bonus?d.num:"#"+d.num}</span></td>
+      <td><span class="tbl-title">${d.titre}</span></td>
+      <td><span style="font-size:11px">${d.cat}</span></td>
+      <td style="font-size:11px;color:var(--gris)">${d.date||"—"}</td>
+      <td><span class="${d.statut==="publie"?"status-pub":"status-draft"}">
+        ${d.statut==="publie"?"Publié":"Brouillon"}
+      </span></td>
+      <td>
+        <div class="tbl-actions">
+          <button class="btn-tbl" onclick="editInclusive('${d.num}')">✏️ Modifier</button>
+          <button class="btn-tbl" onclick="toggleStatut('${d.num}')">
+            ${d.statut==="publie"?"⏸ Dépublier":"▶ Publier"}
+          </button>
+          <button class="btn-tbl danger" onclick="deleteInclusive('${d.num}')">🗑 Supprimer</button>
+        </div>
+      </td>
+    </tr>`).join("");
+}
+
+function toggleStatut(num){
+  const d=adminData.find(x=>String(x.num)===String(num));
+  if(!d)return;
+  d.statut=d.statut==="publie"?"brouillon":"publie";
+  saveAdminData(adminData); syncPublic(); buildManageTable();
+  toast(d.statut==="publie"?"✅ Numéro publié":"⏸ Numéro dépublié");
+}
+
+function deleteInclusive(num){
+  const d=adminData.find(x=>String(x.num)===String(num));
+  if(!d)return;
+  if(!confirm(`Supprimer définitivement le numéro ${num} — "${d.titre}" ?`))return;
+  adminData=adminData.filter(x=>String(x.num)!==String(num));
+  saveAdminData(adminData); syncPublic(); buildManageTable();
+  toast("🗑 Numéro supprimé");
+}
+
+/* ── Export données ───────────────────────────────────────────────── */
+function exportJSON(){
+  const blob=new Blob([JSON.stringify(adminData,null,2)],{type:"application/json"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="linclusive-data.json";
+  a.click();
+  toast("📄 Export JSON téléchargé");
+}
+
+function copyDataBlock(){
+  const lines=adminData.map(d=>{
+    const num=typeof d.num==="number"?d.num:`"${d.num}"`;
+    return `  {num:${num}, titre:"${d.titre.replace(/"/g,'\\"')}", cat:"${d.cat}", date:"${d.date||""}", pdf:"${d.pdf||""}", img:"${d.img||""}", bonus:${d.bonus}, statut:"${d.statut||"publie"}"}`;
+  }).join(",\n");
+  const block=`const DATA = [\n${lines}\n];`;
+  navigator.clipboard.writeText(block)
+    .then(()=>toast("📋 Bloc DATA copié !"))
+    .catch(()=>toast("Copie impossible — utilisez l'export JSON"));
+}
+
+/* ── Changer mot de passe ─────────────────────────────────────────── */
+function changePwd(){
+  const n=document.getElementById("pwd-new").value;
+  const c=document.getElementById("pwd-confirm").value;
+  const msg=document.getElementById("pwd-msg");
+  if(!n){msg.style.color="#E53935";msg.textContent="Saisissez un nouveau mot de passe.";return}
+  if(n!==c){msg.style.color="#E53935";msg.textContent="Les deux mots de passe ne correspondent pas.";return}
+  if(n.length<6){msg.style.color="#E53935";msg.textContent="Minimum 6 caractères.";return}
+  localStorage.setItem(PWD_KEY,n);
+  document.getElementById("pwd-new").value="";
+  document.getElementById("pwd-confirm").value="";
+  msg.style.color=getComputedStyle(document.documentElement).getPropertyValue("--vert");
+  msg.textContent="✅ Mot de passe modifié avec succès.";
+  toast("🔑 Mot de passe mis à jour");
+}
+
+/* ── Init ─────────────────────────────────────────────────────────── */
+syncPublic(); // charge les données admin (publiées) dans DATA
+buildNav();
+render();
+buildBandeaux();
+updateFavCount();
+</script>
+</body>
+</html>
